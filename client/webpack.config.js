@@ -7,7 +7,7 @@ const webpack = require('webpack');
 
 module.exports = {
 	entry: {
-		main: './src/js/index.js'
+		main: './dist/index.js'
 	},
 	module: {
 		rules: [

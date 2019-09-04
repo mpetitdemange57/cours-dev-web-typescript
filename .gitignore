@@ -1,1 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
+.idea
+client/dist
+client/node_modules
+server/node_modules
+sfeir-school-typescript.iml

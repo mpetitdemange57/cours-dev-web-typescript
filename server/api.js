@@ -3,19 +3,19 @@ const MY_TODOS = require('./data/my');
 
 exports.listAll = function (req, res) {
 	console.log(`Requesting all to dos`);
-	res.status(200).json(ALL_TODOS);
+	res.status(200).json(formatted(req, ALL_TODOS));
 };
 
 exports.listMine = function (req, res) {
 	console.log('Requesting my todos');
-	res.status(200).json(MY_TODOS);
+	res.status(200).json(formatted(req, MY_TODOS));
 };
 
 exports.create = function (req, res) {
 	const newToDo = {...req.body, state: 'toDo', id: createId()};
 	console.log(`Creating new to do with id ${newToDo.id} : ${newToDo.title} - ${newToDo.type}`);
 	MY_TODOS.push(newToDo);
-	res.status(200).json(newToDo);
+	res.status(200).json(formatted(req, newToDo));
 };
 
 exports.toInProgress = function (req, res) {
@@ -44,4 +44,13 @@ exports.delete = function (req, res) {
 
 function createId() {
 	return new Date().getTime() + "";
+}
+
+function formatted(req, data) {
+	return {
+		data,
+		metadata: {
+			url: req.url
+		}
+	}
 }
