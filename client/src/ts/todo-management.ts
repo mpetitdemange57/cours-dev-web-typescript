@@ -2,21 +2,19 @@ import { TodoStatus } from './interfaces/todo-status';
 import { makeListDroppable, makeTileDraggable } from './drag-drop';
 import { AddModal } from './add-modal';
 import { generateTodoTile } from './generate-todo-tile';
+import { TodoService } from './todo-service';
+import { Todo } from './interfaces/todo';
 
 export class TodoManagement {
   todoList = [];
 
-  // TODO: JQuery
-  private readonly inProgressContainer = $('#todo-list-in-progress');
+  private readonly inProgressContainer: JQuery<HTMLElement> = $('#todo-list-in-progress');
 
-  // TODO: JQuery
-  private toDoContainer = $('#todo-list-todo');
+  private toDoContainer: JQuery<HTMLElement> = $('#todo-list-todo');
 
-  // TODO: JQuery
-  private readonly doneContainer = $('#todo-list-done');
+  private readonly doneContainer: JQuery<HTMLElement> = $('#todo-list-done');
 
-  // TODO: todoService -> TodoService
-  constructor(private todoService) {
+  constructor(private todoService: TodoService) {
     todoService.findMine().then(response => {
       this.todoList = response.data;
       this.clearAll();
@@ -35,27 +33,23 @@ export class TodoManagement {
     })
   }
 
-  // TODO: function -> return nothing
-  clearAll() {
+  clearAll(): void {
     this.clearList(this.toDoContainer);
     this.clearList(this.inProgressContainer);
     this.clearList(this.doneContainer);
   }
 
-  // TODO: list -> JQuery, function -> return nothing
-  clearList(list) {
+  clearList(list: JQuery<HTMLElement>): void {
     list.find('.todo-tile').remove();
   }
 
-  // TODO: function -> return nothing
-  drawAll() {
+  drawAll(): void {
     this.drawList(this.toDoContainer, TodoStatus.toDo);
     this.drawList(this.inProgressContainer, TodoStatus.inProgress);
     this.drawList(this.doneContainer, TodoStatus.done);
   }
 
-  // TODO: list: JQuery, state -> string, function -> return nothing
-  drawList(list, state) {
+  drawList(list: JQuery<HTMLElement>, state: string): void {
     this.todoList
     .filter(todo => todo.state === state)
     .forEach(todo => {
@@ -65,8 +59,7 @@ export class TodoManagement {
     });
   }
 
-  // TODO: newTodoData -> Todo, function -> return nothing
-  create(newTodoData) {
+  create(newTodoData: Todo): void {
     this.todoService.create(newTodoData)
       .then((response) => {
         const $todoTile = generateTodoTile(this.todoService)(response.data);
@@ -76,8 +69,7 @@ export class TodoManagement {
       });
   }
 
-  // TODO: todoTile: JQuery, function -> return nothing (todo typed later)
-  progressTodo(todoTile, todo) {
+  progressTodo(todoTile: JQuery<HTMLElement>, todo): void {
     let listToAppend;
     let promise;
     switch (todo.state) {
