@@ -1,6 +1,6 @@
 import { TaskProperties } from './task-properties';
+import { TodoStatus } from './todo-status';
 
 export interface Done extends TaskProperties {
-  // TODO: use TodoStatus
-  state: string;
+  state: TodoStatus.done;
 }
