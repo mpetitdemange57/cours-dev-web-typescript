@@ -1,14 +1,13 @@
-import { TodoManagement } from './todo-management';
 import { TodoStatus } from './interfaces/todo-status';
 
-export function makeTileDraggable(tile: any) {
+export function makeTileDraggable(tile) {
   tile.draggable({
     revert: 'invalid'
   });
 }
 
-export function makeListDroppable(management: TodoManagement) {
-  return (list: JQuery<HTMLElement>, status: TodoStatus) => list.droppable({
+export function makeListDroppable(management) {
+  return (list, status) => list.droppable({
     accept: (ui) => {
       switch (status) {
         case TodoStatus.toDo:
@@ -20,7 +19,7 @@ export function makeListDroppable(management: TodoManagement) {
       }
     },
     drop: (event, ui) => {
-      const todoTile: JQuery<HTMLElement> = ui.draggable;
+      const todoTile = ui.draggable;
       const todoId = todoTile.attr('data-id');
       const todo = management.todoList.find(t => t.id === todoId);
       management.progressTodo(ui.draggable, todo);
