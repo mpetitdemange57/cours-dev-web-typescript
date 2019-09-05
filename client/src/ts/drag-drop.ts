@@ -1,12 +1,15 @@
 import { TodoStatus } from './interfaces/todo-status';
 
+// TODO: tile -> JQuery, function -> return nothing
 export function makeTileDraggable(tile) {
   tile.draggable({
     revert: 'invalid'
   });
 }
 
+// TODO: management -> TodoManagement
 export function makeListDroppable(management) {
+  // TODO: list -> JQuery, status -> string, function -> return JQuery
   return (list, status) => list.droppable({
     accept: (ui) => {
       switch (status) {
