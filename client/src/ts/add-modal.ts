@@ -2,14 +2,18 @@ import { generateTodoTile } from './generate-todo-tile';
 
 export class AddModal {
 
+  // TODO: Todo
   private selected= null;
 
+  // TODO: JQuery
   private todoList = $('#new-todo-list');
 
   private $modal: any = $('#modal-add');
 
+  // TODO: todoService -> TodoService
   constructor(private todoService) {}
 
+  // TODO: function -> return Promise of Todo
   open() {
     return new Promise((resolve) => {
       this.$modal.on('hidden.bs.modal', () => {
@@ -39,6 +43,7 @@ export class AddModal {
     });
   }
 
+  // TODO: function -> return nothing
   populate() {
     this.todoService.findAll()
     .then(toDoList => {
@@ -54,6 +59,7 @@ export class AddModal {
     });
   }
 
+  // TODO: function -> return nothing
   clear() {
     this.todoList.find('.todo-tile').remove();
     this.$modal.off('hidden.bs.modal');
