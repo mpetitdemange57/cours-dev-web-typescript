@@ -6,6 +6,8 @@ import { TodoService } from './todo-service';
 import { Todo } from './interfaces/todo';
 
 export class TodoManagement {
+
+  // TODO: Array of Task
   todoList = [];
 
   private readonly inProgressContainer: JQuery<HTMLElement> = $('#todo-list-in-progress');
@@ -49,6 +51,7 @@ export class TodoManagement {
     this.drawList(this.doneContainer, TodoStatus.done);
   }
 
+  // TODO: state -> TodoStatus
   drawList(list: JQuery<HTMLElement>, state: string): void {
     this.todoList
     .filter(todo => todo.state === state)
@@ -69,6 +72,7 @@ export class TodoManagement {
       });
   }
 
+  // TODO: todo -> Task but not Done
   progressTodo(todoTile: JQuery<HTMLElement>, todo): void {
     let listToAppend;
     let promise;
