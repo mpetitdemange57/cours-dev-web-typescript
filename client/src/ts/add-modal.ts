@@ -4,8 +4,7 @@ import { TodoService } from './todo-service';
 
 export class AddModal {
 
-  // TODO: selected -> Todo or null
-  private selected: Todo = null;
+  private selected: Todo | null = null;
 
   private todoList: JQuery<HTMLElement> = $('#new-todo-list');
 

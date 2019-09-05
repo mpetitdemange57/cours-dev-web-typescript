@@ -4,11 +4,12 @@ import { AddModal } from './add-modal';
 import { generateTodoTile } from './generate-todo-tile';
 import { TodoService } from './todo-service';
 import { Todo } from './interfaces/todo';
+import { Task } from './interfaces/task';
+import { Done } from './interfaces/done';
 
 export class TodoManagement {
 
-  // TODO: Array of Task
-  todoList = [];
+  todoList: Task[] = [];
 
   private readonly inProgressContainer: JQuery<HTMLElement> = $('#todo-list-in-progress');
 
@@ -51,8 +52,7 @@ export class TodoManagement {
     this.drawList(this.doneContainer, TodoStatus.done);
   }
 
-  // TODO: state -> TodoStatus
-  drawList(list: JQuery<HTMLElement>, state: string): void {
+  drawList(list: JQuery<HTMLElement>, state: TodoStatus): void {
     this.todoList
     .filter(todo => todo.state === state)
     .forEach(todo => {
@@ -72,18 +72,17 @@ export class TodoManagement {
       });
   }
 
-  // TODO: todo -> Task but not Done
-  progressTodo(todoTile: JQuery<HTMLElement>, todo): void {
+  progressTodo(todoTile: JQuery<HTMLElement>, todo: Task extends Done ? never : Task): void {
     let listToAppend;
     let promise;
     switch (todo.state) {
       case TodoStatus.toDo:
-        todo.state = TodoStatus.inProgress;
+        (todo as Task).state = TodoStatus.inProgress;
         listToAppend = this.inProgressContainer;
         promise = this.todoService.toInProgress(todo.id);
         break;
       case TodoStatus.inProgress:
-        todo.state = TodoStatus.done;
+        (todo as Task).state = TodoStatus.done;
         listToAppend = this.doneContainer;
         promise = this.todoService.toDone(todo.id);
         break;

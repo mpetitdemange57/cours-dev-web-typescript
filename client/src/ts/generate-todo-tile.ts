@@ -1,9 +1,9 @@
 import { TodoService } from './todo-service';
-import { TaskProperties } from './interfaces/task-properties';
+import { Task } from './interfaces/task';
 
 export function generateTodoTile(todoService: TodoService) {
   // TODO: todo -> Task
-  return (todo: TaskProperties): JQuery => {
+  return (todo: Task): JQuery => {
     const $todoTile = $(`<div class="todo-tile shadow rounded border ${todo.type}" data-id="${todo.id}"></div>`);
     const $todoTitle = $(`<div class="todo-title"><b>${todo.title}</b></div>`);
     let imgPath;
