@@ -1,8 +1,8 @@
 import { TodoService } from './todo-service';
+import { TaskProperties } from './interfaces/task-properties';
 
 export function generateTodoTile(todoService: TodoService) {
-  // TODO: todo -> TaskProperties
-  return (todo): JQuery => {
+  return (todo: TaskProperties): JQuery => {
     const $todoTile = $(`<div class="todo-tile shadow rounded border ${todo.type}" data-id="${todo.id}"></div>`);
     const $todoTitle = $(`<div class="todo-title"><b>${todo.title}</b></div>`);
     let imgPath;
@@ -18,7 +18,7 @@ export function generateTodoTile(todoService: TodoService) {
       $todoTile.append(todoOwner);
     }
     if (todo.dueDate) {
-      const todoDueDate = $(`<div class="todo-due-date"><i>${new Date(todo.duedate).toDateString()}</i></div>`);
+      const todoDueDate = $(`<div class="todo-due-date"><i>${new Date(todo.dueDate).toDateString()}</i></div>`);
       $todoTile.append(todoDueDate);
     }
     if (todo.id) {

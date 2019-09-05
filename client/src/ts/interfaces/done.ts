@@ -1,4 +1,5 @@
-/**
- * TODO: Create an interface "Todo" which extends "TaskProperties"
- * This interface will have a property state which is a string (status "done")
- */
+import { TaskProperties } from './task-properties';
+
+export interface Done extends TaskProperties {
+  state: string;
+}
