@@ -1,8 +1,6 @@
-import { TodoService } from './todo-service';
-import { Task } from './interfaces/task';
 
-export function generateTodoTile(todoService: TodoService) {
-  return (todo: Task): JQuery<HTMLElement> => {
+export function generateTodoTile(todoService) {
+  return (todo) => {
     const $todoTile = $(`<div class="todo-tile shadow rounded border ${todo.type}" data-id="${todo.id}"></div>`);
     const $todoTitle = $(`<div class="todo-title"><b>${todo.title}</b></div>`);
     let imgPath;
@@ -14,11 +12,11 @@ export function generateTodoTile(todoService: TodoService) {
     const $todoImg = $(`<div class="todo-img-container"><img class="todo-img" src="${imgPath}"></div>`);
     $todoTile.append($todoImg).append($todoTitle);
     if (todo.owner) {
-      const todoOwner: JQuery<HTMLDivElement> = $(`<div class="todo-owner">${todo.owner}</div>`);
+      const todoOwner = $(`<div class="todo-owner">${todo.owner}</div>`);
       $todoTile.append(todoOwner);
     }
     if (todo.dueDate) {
-      const todoDueDate: JQuery<HTMLDivElement> = $(`<div class="todo-due-date"><i>${new Date(todo.dueDate).toDateString()}</i></div>`);
+      const todoDueDate = $(`<div class="todo-due-date"><i>${new Date(todo.duedate).toDateString()}</i></div>`);
       $todoTile.append(todoDueDate);
     }
     if (todo.id) {

@@ -1,23 +1,18 @@
-import { Task } from './interfaces/task';
-import { TodoService } from './todo-service';
-import { Todo } from './interfaces/todo';
-import { Done } from './interfaces/done';
 import { TodoStatus } from './interfaces/todo-status';
 import { makeListDroppable, makeTileDraggable } from './drag-drop';
 import { AddModal } from './add-modal';
 import { generateTodoTile } from './generate-todo-tile';
-import jqXHR = JQuery.jqXHR;
 
 export class TodoManagement {
-  todoList: Task[] = [];
+  todoList = [];
 
-  private readonly inProgressContainer: JQuery<HTMLElement> = $('#todo-list-in-progress');
+  private readonly inProgressContainer = $('#todo-list-in-progress');
 
-  private toDoContainer: JQuery<HTMLElement> = $('#todo-list-todo');
+  private toDoContainer = $('#todo-list-todo');
 
-  private readonly doneContainer: JQuery<HTMLElement> = $('#todo-list-done');
+  private readonly doneContainer = $('#todo-list-done');
 
-  constructor(private todoService: TodoService) {
+  constructor(private todoService) {
     todoService.findMine().then(response => {
       this.todoList = response.data;
       this.clearAll();
@@ -42,7 +37,7 @@ export class TodoManagement {
     this.clearList(this.doneContainer);
   }
 
-  clearList(list: JQuery<HTMLElement>) {
+  clearList(list) {
     list.find('.todo-tile').remove();
   }
 
@@ -52,7 +47,7 @@ export class TodoManagement {
     this.drawList(this.doneContainer, TodoStatus.done);
   }
 
-  drawList(list: JQuery<HTMLElement>, state: TodoStatus) {
+  drawList(list, state) {
     this.todoList
     .filter(todo => todo.state === state)
     .forEach(todo => {
@@ -62,7 +57,7 @@ export class TodoManagement {
     });
   }
 
-  create(newTodoData: Todo) {
+  create(newTodoData) {
     this.todoService.create(newTodoData)
       .then((response) => {
         const $todoTile = generateTodoTile(this.todoService)(response.data);
@@ -72,17 +67,17 @@ export class TodoManagement {
       });
   }
 
-  progressTodo(todoTile: JQuery<HTMLElement>, todo: Task extends Done ? never : Task) {
-    let listToAppend: JQuery<HTMLElement>;
-    let promise: jqXHR<void>;
+  progressTodo(todoTile, todo) {
+    let listToAppend;
+    let promise;
     switch (todo.state) {
       case TodoStatus.toDo:
-        (todo as Task).state = TodoStatus.inProgress;
+        todo.state = TodoStatus.inProgress;
         listToAppend = this.inProgressContainer;
         promise = this.todoService.toInProgress(todo.id);
         break;
       case TodoStatus.inProgress:
-        (todo as Task).state = TodoStatus.done;
+        todo.state = TodoStatus.done;
         listToAppend = this.doneContainer;
         promise = this.todoService.toDone(todo.id);
         break;
