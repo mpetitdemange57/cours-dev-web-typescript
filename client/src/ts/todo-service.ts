@@ -1,47 +1,45 @@
+import { BackendResponse } from './interfaces/backend-response';
+import { Todo } from './interfaces/todo';
+import { Task } from './interfaces/task';
+
 export class TodoService {
 
   private apiUrl = 'http://localhost:9000/api';
 
-  // TODO: function -> return JQuery.jqXHR of BackendResponse of Array of Todo
-  findAll() {
+  findAll(): JQuery.jqXHR<BackendResponse<Todo[]>> {
     return $.ajax({
       url: `${this.apiUrl}/all`
     });
   }
 
-  // TODO: function -> return JQuery.jqXHR of BackendResponse of Array of Task
-  findMine() {
+  findMine(): JQuery.jqXHR<BackendResponse<Task[]>> {
     return $.ajax({
       url: `${this.apiUrl}/my`
     });
   }
 
-  // TODO: function -> return JQuery.jqXHR of void
-  delete(id) {
+  delete(id: string): JQuery.jqXHR<void> {
     return $.ajax({
       method: 'DELETE',
       url: `${this.apiUrl}/my/${id}`
     });
   }
 
-  // TODO: function -> return JQuery.jqXHR of void
-  toInProgress(id) {
+  toInProgress(id: string): JQuery.jqXHR<void> {
     return $.ajax({
       method: 'PUT',
       url: `${this.apiUrl}/my/${id}/in-progress`
     });
   }
 
-  // TODO: function -> return JQuery.jqXHR of void
-  toDone(id){
+  toDone(id: string): JQuery.jqXHR<void> {
     return $.ajax({
       method: 'PUT',
       url: `${this.apiUrl}/my/${id}/done`
     });
   }
 
-  // TODO: function -> return JQuery.jqXHR of BackendResponse of Todo
-  create(task) {
+  create(task: Task): JQuery.jqXHR<BackendResponse<Todo>> {
     return $.ajax({
       method: 'PUT',
       data: task,
